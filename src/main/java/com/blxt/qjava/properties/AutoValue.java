@@ -76,6 +76,7 @@ public class AutoValue {
                 properties = new PropertiesDefault(new File(propertiePath));
             }
         }
+        // TODO 实现Configuration注解中的proxyBeanMethods,自定义的properties解析类 
 
         // 获取f对象对应类中的所有属性域
         Field[] fields = bean.getClass().getDeclaredFields();
@@ -100,17 +101,17 @@ public class AutoValue {
             java.lang.Object value = null;
 
             if(fieldType.endsWith("String")){
-                value = properties.getStr(valuename.key());
+                value = properties.getStr(valuename.value());
             }else if(fieldType.endsWith("Integer") || fieldType.endsWith("int")){
-                value = properties.getInt(valuename.key());
+                value = properties.getInt(valuename.value());
             } else if(fieldType.endsWith("Short") || fieldType.endsWith("short")){
-                value = properties.getShort(valuename.key());
+                value = properties.getShort(valuename.value());
             }else if(fieldType.endsWith("Boolean") || fieldType.endsWith("boolean")){
-                value = properties.getBoolean(valuename.key());
+                value = properties.getBoolean(valuename.value());
             } else if(fieldType.endsWith("Double") || fieldType.endsWith("double")){
-                value = properties.getDouble(valuename.key());
+                value = properties.getDouble(valuename.value());
             }else if(fieldType.endsWith("Float") || fieldType.endsWith("float")){
-                value = properties.getFloat(valuename.key());
+                value = properties.getFloat(valuename.value());
             }
             if(value != null) {
                 field.set(bean, value);

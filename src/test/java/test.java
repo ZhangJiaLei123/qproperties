@@ -28,7 +28,7 @@ public class test {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-        System.out.println("传入的对象中包含一个如下的变量：" + appConfiguration.toString());
+        System.out.println("自动注入结果:" + appConfiguration.toString());
         //    testJava(AppConfiguration.class);
     }
 
@@ -49,8 +49,8 @@ public class test {
                 continue;
             }
             // 根据对象获取注解值
-            isNotNullStr = methodAnno.key();
-            System.out.println("注解: key:" + methodAnno.key() + ",value:" + methodAnno.key() );
+            isNotNullStr = methodAnno.value();
+            System.out.println("注解: key:" + methodAnno.value() + ",value:" + methodAnno.value() );
 
         }
     }
@@ -106,7 +106,7 @@ public class test {
                     // 获取自定义注解对象
                     Value methodAnno = declaredMethod.getAnnotation(Value.class);
                     // 根据对象获取注解值
-                    isNotNullStr = methodAnno.key();
+                    isNotNullStr = methodAnno.value();
                     System.out.println(isNotNullStr);
                 }
              //   list.add(new AppConfiguration(declaredMethod.getName(),isNotNullStr));

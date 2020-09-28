@@ -7,20 +7,20 @@ import java.io.File;
  * 插件通用配置
  * @author 张家磊
  */
-@Configuration(value="../src/test/resources/app.properties")
+@Configuration("../src/test/resources/app.properties")
 public class AppConfiguration   {
 
-    @Value(key="test.string_t")
+    @Value("test.string_t")
     private String string_t = "Default";
 
-    @Value(key="test.int_t" )
+    @Value("test.int_t" )
     private int int_t;
 
-    @Value(key="test.float_t" )
+    @Value("test.float_t" )
     private float float_t ;
-    @Value(key="test.double_t" )
+    @Value("test.double_t" )
     private double double_t ;
-    @Value(key="test.boolean_t" )
+    @Value("test.boolean_t" )
     private boolean boolean_t ;
 
 
