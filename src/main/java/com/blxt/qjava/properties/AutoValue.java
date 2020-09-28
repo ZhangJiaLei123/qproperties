@@ -53,7 +53,6 @@ public class AutoValue {
         if(propertiesDefault == null){
             System.err.println("没有找到配置文件" + getPath());
         }
-
     }
 
 
@@ -76,7 +75,7 @@ public class AutoValue {
                 properties = new PropertiesDefault(new File(propertiePath));
             }
         }
-        // TODO 实现Configuration注解中的proxyBeanMethods,自定义的properties解析类 
+        // TODO 实现Configuration注解中的proxyBeanMethods,自定义的properties解析类
 
         // 获取f对象对应类中的所有属性域
         Field[] fields = bean.getClass().getDeclaredFields();
