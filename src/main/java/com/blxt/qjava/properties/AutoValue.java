@@ -25,7 +25,7 @@ public class AutoValue {
     /** 项目起始类 */
     static Class<?> rootClass;
     /** 默认的配置读取工具 */
-    static PropertiesDefault propertiesDefault;
+    static PropertiesFactory propertiesFactory;
 
     /** 默认配置文件 */
     private static String filePath[] = new String[]{"resources/application.properties",
@@ -40,42 +40,32 @@ public class AutoValue {
      * @throws IOException
      */
     public static void init(Class<?> rootClass) throws IOException {
+        if(AutoValue.rootClass != null){
+            return;
+        }
         AutoValue.rootClass = rootClass;
         String appPath = getPath();
         for(String path : filePath){
             File file = new File(appPath + File.separator + path);
             if (file.exists()){
-                propertiesDefault = new PropertiesDefault(file);
+                propertiesFactory = new PropertiesFactory(file);
                 System.out.println("配置文件" + file.getPath());
                 break;
             }
         }
-        if(propertiesDefault == null){
+        if(propertiesFactory == null){
             System.err.println("没有找到配置文件" + getPath());
         }
     }
 
-
-
     /**
-     * 自动 获取变量名
+     * 从指定 Properties 中获取配置
      * @param bean
+     * @param properties
+     * @throws IllegalAccessException
+     * @throws IOException
      */
-    public static void autoVariable(Object bean) throws IllegalAccessException, IOException {
-        PropertiesDefault properties  = propertiesDefault;
-
-        // 从类注解Configuration中获取值,判断是否是自定义的配置文件路径
-        Configuration anno =  bean.getClass().getAnnotation(Configuration.class);
-        String propertiePath = anno.value();
-        if(propertiePath != null && !propertiePath.trim().isEmpty()){
-            // 如果文件路径是以 . 开头的,那么认为这是相对路径
-            if(propertiePath.startsWith(".")){
-                properties = new PropertiesDefault(new File(getPath() + File.separator + propertiePath));
-            }else {
-                properties = new PropertiesDefault(new File(propertiePath));
-            }
-        }
-        // TODO 实现Configuration注解中的proxyBeanMethods,自定义的properties解析类
+    public static void autoVariable(Object bean, PropertiesFactory properties) throws IllegalAccessException {
 
         // 获取f对象对应类中的所有属性域
         Field[] fields = bean.getClass().getDeclaredFields();
@@ -119,7 +109,48 @@ public class AutoValue {
             // 恢复访问控制权限
             field.setAccessible(accessFlag);
         }
+    }
 
+
+    /**
+     * 自动 获取变量名
+     * @param bean
+     */
+    public static void autoVariable(Object bean) throws IllegalAccessException, IOException {
+        PropertiesFactory properties = propertiesFactory;
+
+
+        // 从类注解Configuration中获取值,判断是否是自定义的配置文件路径
+        Configuration anno =  bean.getClass().getAnnotation(Configuration.class);
+        String propertiePath = anno.value();
+        if(propertiePath != null && !propertiePath.trim().isEmpty()){
+            // 如果文件路径是以 . 开头的,那么认为这是相对路径
+            if(propertiePath.startsWith(".")){
+                properties = new PropertiesFactory(new File(getPath() + File.separator + propertiePath));
+            }else {
+                properties = new PropertiesFactory(new File(propertiePath));
+            }
+        }
+        // TODO 实现Configuration注解中的proxyBeanMethods,自定义的properties解析类
+
+        autoVariable(bean, properties);
+    }
+
+    /**
+     * 自动 获取变量名
+     * @param bean
+     * @param directory         目录
+     * @param fileName          文件名
+     * @throws IllegalAccessException
+     * @throws IOException
+     */
+    public static void autoVariable(Object bean, String directory, String fileName) throws IllegalAccessException, IOException {
+
+        // 如果文件路径是以 . 开头的,那么认为这是相对路径
+        PropertiesFactory properties =
+                new PropertiesFactory(new File(directory + File.separator + fileName));
+
+        autoVariable(bean, properties);
     }
 
     /**

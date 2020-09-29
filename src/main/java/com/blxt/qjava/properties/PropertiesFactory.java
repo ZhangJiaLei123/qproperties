@@ -9,9 +9,9 @@ import java.util.Properties;
  * @Author: Zhang.Jialei
  * @Date: 2020/9/28 20:09
  */
-public class PropertiesDefault extends Properties {
+public class PropertiesFactory extends Properties {
 
-    public PropertiesDefault(File file) throws IOException {
+    public PropertiesFactory(File file) throws IOException {
         checkNotNull(file, "包含属性的文件不能为空");
 
         FileReader in = new FileReader(file);

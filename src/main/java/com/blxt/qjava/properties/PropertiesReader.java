@@ -15,7 +15,6 @@
  */
 package com.blxt.qjava.properties;
 
-import com.alibaba.fastjson.JSONObject;
 
 import java.io.File;
 import java.io.FileReader;
