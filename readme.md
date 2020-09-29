@@ -20,7 +20,12 @@
  // 使用,这里的AppConfiguration,是自定义的类,没有任何限制,只要对需要注入参数添加Value注释就行  
  AppConfiguration appConfiguration = new AppConfiguration();
  try {
+    // 方式1 使用默认配置文件 
     AutoValue.autoVariable(appConfiguration);
+    // 方式2, 使用集成的自定义properties
+    AutoValue.autoVariable(appConfiguration, PropertiesFactory properties);
+    // 方式3  使用指定位置的properties
+    AutoValue.autoVariable(appConfiguration, String directory, String fileName);
  } catch (IllegalAccessException e) {
     e.printStackTrace();
  }
