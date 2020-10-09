@@ -55,9 +55,6 @@ public class test {
         }
     }
 
-
-
-
     /**
      * 获取类注解
      * @param cl1
@@ -74,7 +71,6 @@ public class test {
         }
 
     }
-
 
     /**
      * 获取类中的所有方法

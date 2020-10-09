@@ -119,7 +119,6 @@ public class AutoValue {
     public static void autoVariable(Object bean) throws IllegalAccessException, IOException {
         PropertiesFactory properties = propertiesFactory;
 
-
         // 从类注解Configuration中获取值,判断是否是自定义的配置文件路径
         Configuration anno =  bean.getClass().getAnnotation(Configuration.class);
         String propertiePath = anno.value();
